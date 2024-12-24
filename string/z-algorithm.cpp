@@ -1,3 +1,19 @@
+/*
+  TERMS:
+  1. Segment Match: those substrings that coincide with a prefix of s
+  2. Rightmost Segment Match denoted by [l,r) represents the scanned boundary.
+
+  STEPS:
+
+  1. Initialise the rightmost segments [l,r)
+  2. Iterate from i=1.
+  3. Use Precomputed Z function values if i < r to get an initial approximation of z[i]
+      z[i] = min( r-i, z[i-l] );
+      # r-i is taken in case i+z[i-l] values crosses the current boundary.
+
+  4. Apply Brute Force for matches (use z[i] for indexing).
+  5. Upate the rightmost segment if i+z[i] > r.
+*/
 typedef long long int ll;
 #include <bits/stdc++.h>
 using namespace std;
@@ -22,7 +38,7 @@ vector<int> computeZFn(string &s)
     if (i + z[i] > r)
     {
       l = i;
-      r = i + z[i] + 1;
+      r = i + z[i];
     }
   }
 
